@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IfcSiteLocationCoordinates", "IfcSiteLocationCoordinates.csproj", "{D112F62B-FF38-43A5-9813-D8592FEE10B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D112F62B-FF38-43A5-9813-D8592FEE10B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D112F62B-FF38-43A5-9813-D8592FEE10B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D112F62B-FF38-43A5-9813-D8592FEE10B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D112F62B-FF38-43A5-9813-D8592FEE10B4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BB4C0EF-3F13-4F88-A781-90273C69983F}
+	EndGlobalSection
+EndGlobal
