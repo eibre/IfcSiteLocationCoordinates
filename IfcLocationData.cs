@@ -50,7 +50,14 @@ namespace IfcSiteLocationCoordinates
                 LengthUnit = lengtUnit.FullName;
 
                 IIfcSite site = model.Instances.FirstOrDefault<IIfcSite>();
-                refElevation = site.RefElevation.Value;
+                if (site.RefElevation.HasValue)
+                {
+                    refElevation = site.RefElevation.Value;
+                }
+                else
+                {
+                    refElevation = double.NaN;
+                }
                 IIfcLocalPlacement placement = site.ObjectPlacement as IIfcLocalPlacement;
                 IIfcAxis2Placement3D axis2Placement = placement.RelativePlacement as IIfcAxis2Placement3D;
                 double x = axis2Placement.RefDirection.DirectionRatios.GetAt(0);
