@@ -38,12 +38,15 @@ namespace IfcSiteLocationCoordinates
                 IfcLocationData data = new IfcLocationData(openFileDialog.FileName);
                 StringBuilder sb = new StringBuilder();
                 sb.Append("File Path: " + openFileDialog.FileName);
-                sb.Append("\n Authoring program: " + data.AuthoringTool);
-                sb.Append("\n\nIfcSite.RefElevation is: " + data.refElevation.ToString());
+                sb.Append("\nAuthoring program: " + data.AuthoringTool);
+                sb.Append("\nLength unit: " + data.LengthUnit);
                 sb.Append("\n\nInfo from IfcSites IfcLocalPlacement:");
-                sb.Append("\nAngle to true north is: " + data.Orientation.ToString());
-                sb.Append($"\nEW: {data.EW}, NS: {data.NS}");
+                sb.Append($"\nN/S: {data.NS}\nEW: {data.EW}");
                 sb.Append("\nElevation: " + data.elevation.ToString());
+                sb.Append("\nAngle to True North: " + data.Orientation.ToString());
+
+                sb.Append("\n\nIfcSite.RefElevation is: " + data.refElevation.ToString());
+                sb.Append("\nRevit will add this value to the shared elevation on link/import, but most other software ignores this.");
 
 
                 this.textBox.Text = sb.ToString();

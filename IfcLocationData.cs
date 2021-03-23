@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using Xbim.Ifc;
 using Xbim.Common.Collections;
 using Xbim.Ifc2x3.Interfaces;
+using Xbim.Ifc2x3.MeasureResource;
 
 namespace IfcSiteLocationCoordinates
 {
@@ -16,7 +18,10 @@ namespace IfcSiteLocationCoordinates
             {
                 IIfcProject project = model.Instances.FirstOrDefault<IIfcProject>();
                 AuthoringTool = project.OwnerHistory.OwningApplication.ApplicationFullName;
-                
+
+                IIfcSIUnit lengtUnit = project.UnitsInContext.Units.FirstOrDefault<IIfcSIUnit>(q => q.UnitType == IfcUnitEnum.LENGTHUNIT);
+                LengthUnit = lengtUnit.FullName;
+
                 IIfcSite site = model.Instances.FirstOrDefault<IIfcSite>();
                 refElevation = site.RefElevation.Value;
                 IIfcLocalPlacement placement = site.ObjectPlacement as IIfcLocalPlacement;
@@ -41,5 +46,6 @@ namespace IfcSiteLocationCoordinates
 
         public string AuthoringTool { get; set; }
         public string LengthUnit { get; set; }
+
     }
 }
