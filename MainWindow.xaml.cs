@@ -37,16 +37,27 @@ namespace IfcSiteLocationCoordinates
                 
                 IfcLocationData data = new IfcLocationData(openFileDialog.FileName);
                 StringBuilder sb = new StringBuilder();
-                sb.Append("File Path: " + openFileDialog.FileName);
-                sb.Append("\nAuthoring program: " + data.AuthoringTool);
-                sb.Append("\nLength unit: " + data.LengthUnit);
-                sb.Append("\n\nInfo from IfcSites IfcLocalPlacement:");
-                sb.Append($"\nN/S: {data.NS}\nEW: {data.EW}");
-                sb.Append("\nElevation: " + data.elevation.ToString());
-                sb.Append("\nAngle to True North: " + data.Orientation.ToString());
+                if (data.SchemaIsSupported)
+                {
+ 
+                    sb.Append("File Path: " + openFileDialog.FileName);
+                    sb.Append("\nSchema: " + data.Schema);
+                    sb.Append("\nAuthoring program: " + data.AuthoringTool);
+                    sb.Append("\nLength unit: " + data.LengthUnit);
+                    sb.Append("\n\nInfo from IfcSites IfcLocalPlacement:");
+                    sb.Append($"\nN/S: {data.NS}\nE/W: {data.EW}");
+                    sb.Append("\nElevation: " + data.elevation.ToString());
+                    sb.Append("\nAngle to True North: " + data.Orientation.ToString());
 
-                sb.Append("\n\nIfcSite.RefElevation is: " + data.refElevation.ToString());
-                sb.Append("\nRevit will add this value to the shared elevation on link/import, but most other software ignores this.");
+                    sb.Append("\n\nIfcSite.RefElevation is: " + data.refElevation.ToString());
+                    sb.Append("\nRevit will add this value to the shared elevation on link/import, but most other software ignores this.");
+                }
+                else
+                {
+                    sb.Append("File Path: " + openFileDialog.FileName);
+                    sb.Append("\nSchema: " + data.Schema);
+                    sb.Append("\nThis Schema is not supported yet");
+                }
 
 
                 this.textBox.Text = sb.ToString();

@@ -4,6 +4,7 @@ using System.Text;
 using System.Linq;
 using Xbim.Ifc;
 using Xbim.Common.Collections;
+using Xbim.Common.Step21;
 using Xbim.Ifc2x3.Interfaces;
 using Xbim.Ifc2x3.MeasureResource;
 
@@ -16,8 +17,34 @@ namespace IfcSiteLocationCoordinates
 
             using (IfcStore model = IfcStore.Open(path))
             {
+                if (model.SchemaVersion == XbimSchemaVersion.Ifc2X3)
+                {
+                    Schema = "Ifc 2x3";
+                    SchemaIsSupported = true;
+                }
+                else if (model.SchemaVersion == XbimSchemaVersion.Ifc4)
+                {
+                    Schema = "Ifc4";
+                    SchemaIsSupported = false;
+                    return;
+                }
+                else
+                {
+                    Schema = model.SchemaVersion.ToString();
+                    SchemaIsSupported = false;
+                    return;
+                }
                 IIfcProject project = model.Instances.FirstOrDefault<IIfcProject>();
-                AuthoringTool = project.OwnerHistory.OwningApplication.ApplicationFullName;
+                string applicationFullname = project.OwnerHistory.OwningApplication.ApplicationFullName;
+                if (applicationFullname == null)
+                {
+                    AuthoringTool = "N/A";
+                }
+                else
+                {
+                    AuthoringTool = project.OwnerHistory.OwningApplication.ApplicationFullName;
+                }
+
 
                 IIfcSIUnit lengtUnit = project.UnitsInContext.Units.FirstOrDefault<IIfcSIUnit>(q => q.UnitType == IfcUnitEnum.LENGTHUNIT);
                 LengthUnit = lengtUnit.FullName;
@@ -28,7 +55,11 @@ namespace IfcSiteLocationCoordinates
                 IIfcAxis2Placement3D axis2Placement = placement.RelativePlacement as IIfcAxis2Placement3D;
                 double x = axis2Placement.RefDirection.DirectionRatios.GetAt(0);
                 double y = axis2Placement.RefDirection.DirectionRatios.GetAt(1);
-                double angle = 360-Math.Atan2(y, x)*180/Math.PI;
+                double angle = 360 - Math.Atan2(y, x) * 180 / Math.PI;
+                if (angle.Equals(360))
+                {
+                    angle = 0;
+                }
                 Orientation = angle;
 
                 EW = axis2Placement.Location.Coordinates.GetAt(0);
@@ -46,6 +77,8 @@ namespace IfcSiteLocationCoordinates
 
         public string AuthoringTool { get; set; }
         public string LengthUnit { get; set; }
+        public string Schema { get; set; }
+        public bool SchemaIsSupported {get; set; }
 
     }
 }
